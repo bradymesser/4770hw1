@@ -52,13 +52,11 @@ int main (int argc, char * argv[]) {
   // }
   int globalCount = 0;
   samples = samples * numprocs;
-  printf("LOCAL COUNT: %d\n", count);
   ierr = MPI_Reduce(&count, &globalCount, numprocs, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   if (id == 0) {
-    printf("SAMPLES: %d, NUMPROCS: %d\n", samples, numprocs);
-    // samples = samples * numprocs;
     pi = 4.0 * (double)globalCount/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", globalCount, samples, pi);
+    printf("Elapsed time = %f\n", MPI_Wtime());
   }
   ierr = MPI_Finalize();
   return 0;
