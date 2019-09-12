@@ -46,6 +46,7 @@ int main (int argc, char * argv[]) {
       ierr = MPI_Recv(&temp, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
       count += temp;
     }
+    samples = samples * numprocs;
     pi = 4.0 * (double)count/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
   }
