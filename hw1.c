@@ -13,13 +13,19 @@ int main (int argc, char * argv[]) {
   int sendCount = 1;
   int receiveCount = 1;
   int send_tag = 69;
-
+  float startTime = 0;
+  float endTime = 0;
   MPI_Status status;
   int id, numprocs;
+
   int ierr = MPI_Init(&argc, &argv);
+  startTime = MPI_Wtime();
+
   ierr = MPI_Comm_rank(MPI_COMM_WORLD, &id);
   ierr = MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+
   samples = atoi(argv[1]);
+
   if (id == 0) {
     samples = samples / numprocs;
     for (int i = 1; i < numprocs; i++) {
@@ -38,25 +44,14 @@ int main (int argc, char * argv[]) {
     }
   }
 
-  // if (id != 0) {
-  //   ierr = MPI_Send(&count, sendCount, MPI_INT, 0, send_tag, MPI_COMM_WORLD);
-  // } else {
-  //   int temp = 0;
-  //   for (int i = 1; i < numprocs; i++) {
-  //     ierr = MPI_Recv(&temp, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-  //     count += temp;
-  //   }
-  //   samples = samples * numprocs;I
-  //   pi = 4.0 * (double)count/(double)samples;
-  //   printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
-  // }
   int globalCount = 0;
   samples = samples * numprocs;
   ierr = MPI_Reduce(&count, &globalCount, numprocs, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   if (id == 0) {
+    endTime = MPI_Wtime();
     pi = 4.0 * (double)globalCount/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", globalCount, samples, pi);
-    printf("Elapsed time = %f\n", MPI_Wtime());
+    printf("Elapsed time = %f\n", endTime-startTime);
   }
   ierr = MPI_Finalize();
   return 0;
