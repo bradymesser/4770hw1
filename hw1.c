@@ -51,6 +51,7 @@ int main (int argc, char * argv[]) {
   //   printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
   // }
   int globalCount = 0;
+  printf("LOCAL COUNT: %d\n", count);
   ierr = MPI_Reduce(&count, &globalCount, numprocs, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   if (id == 0) {
     samples = samples * numprocs;
