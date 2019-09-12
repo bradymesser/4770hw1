@@ -52,7 +52,7 @@ int main (int argc, char * argv[]) {
   // }
   int globalCount = 0;
   ierr = MPI_Reduce(&count, &globalCount, numprocs, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-  samples = samples * numprocs;I
+  samples = samples * numprocs;
   pi = 4.0 * (double)count/(double)samples;
   printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", globalCount, samples, pi);
   ierr = MPI_Finalize();
