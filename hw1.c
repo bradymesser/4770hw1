@@ -23,7 +23,7 @@ int main (int argc, char * argv[]) {
   if (id == 0) {
     samples = samples / numprocs;
     for (int i = 1; i < numprocs; i++) {
-      ierr = MPI_Send(&samples, sendCount, MPI_INT,i, 69, MPI_COMM_WORLD);
+      ierr = MPI_Send(&samples, sendCount, MPI_INT,i, MPI_ANY_TAG, MPI_COMM_WORLD);
     }
   } else {
       ierr = MPI_Recv(&samples, receiveCount, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
@@ -38,8 +38,14 @@ int main (int argc, char * argv[]) {
     }
   }
 
-  pi = 4.0 * (double)count/(double)samples;
-  printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
+  if (id != 0) {
+    ierr = MPI_Send(&count, sendCount, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD);
+  } else {
+    ierr = MPI_Recv(&count, numprocs, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+    pi = 4.0 * (double)count/(double)samples;
+    printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
+  }
+
   ierr = MPI_Finalize();
   return 0;
 }
