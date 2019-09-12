@@ -11,6 +11,11 @@ int main (int argc, char * argv[]) {
   double pi;
   int rank, numtasks;
 
+  int id, numprocs;
+  int ierr = MPI_Init(&argc, &argv);
+  ierr = MPI_Comm_rank(MPI_COMM_WORLD, &id);
+  ierr = MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+
   samples = atoi(argv[1]);
 
   count = 0;
@@ -25,5 +30,6 @@ int main (int argc, char * argv[]) {
 
   pi = 4.0 * (double)count/(double)samples;
   printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
+  ierr = MPI_Finalize();
   return 0;
 }
