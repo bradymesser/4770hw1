@@ -41,7 +41,11 @@ int main (int argc, char * argv[]) {
   if (id != 0) {
     ierr = MPI_Send(&count, sendCount, MPI_INT, 0, send_tag, MPI_COMM_WORLD);
   } else {
-    ierr = MPI_Recv(&count, numprocs, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+    int temp = 0;
+    for (int i = 1; i < numprocs; i++) {
+      ierr = MPI_Recv(&temp, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+      count += temp;
+    }
     pi = 4.0 * (double)count/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", count, samples, pi);
   }
