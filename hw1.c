@@ -44,11 +44,11 @@ int main (int argc, char * argv[]) {
     }
   }
 
+  endTime = MPI_Wtime();
   int globalCount = 0;
   samples = samples * numprocs;
   ierr = MPI_Reduce(&count, &globalCount, numprocs, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   if (id == 0) {
-    endTime = MPI_Wtime();
     pi = 4.0 * (double)globalCount/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", globalCount, samples, pi);
     printf("Elapsed time = %f\n", endTime-startTime);
