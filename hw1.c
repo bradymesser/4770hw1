@@ -13,8 +13,8 @@ int main (int argc, char * argv[]) {
   int sendCount = 1;
   int receiveCount = 1;
   int send_tag = 69;
-  float startTime = 0;
-  float endTime = 0;
+  double startTime = 0;
+  double endTime = 0;
   MPI_Status status;
   int id, numprocs;
 
