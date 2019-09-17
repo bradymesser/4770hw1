@@ -43,7 +43,7 @@ int main (int argc, char * argv[]) {
       count++;
     }
   }
-
+  printf("3\n");
   endTime = MPI_Wtime();
   int globalCount = 0;
   samples = samples * numprocs;
