@@ -1,6 +1,5 @@
 default:
 	mpicc hw1.c -o hw1
-	mpirun -np 4 --mca mpi_cuda_support 0 hw1 100000
 
 gcc:
 	gcc hw1.c -o hw1
@@ -30,3 +29,7 @@ test:
 	mpirun -np 8 --mca mpi_cuda_support 0 hw1 10000000
 	mpirun -np 16 --mca mpi_cuda_support 0 hw1 100000
 	mpirun -np 16 --mca mpi_cuda_support 0 hw1 10000000
+
+16:
+	mpicc hw1.c -o hw1
+	mpirun -np 16 --mca mpi_cuda_support 0 hw1 100000
