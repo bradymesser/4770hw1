@@ -25,7 +25,6 @@ int main (int argc, char * argv[]) {
   ierr = MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
 
   samples = atoi(argv[1]);
-  printf("1\n");
   if (id == 0) {
     samples = samples / numprocs;
     for (int i = 1; i < numprocs; i++) {
@@ -43,7 +42,6 @@ int main (int argc, char * argv[]) {
       count++;
     }
   }
-  printf("3\n");
   endTime = MPI_Wtime();
   int globalCount = 0;
   samples = samples * numprocs;
@@ -51,6 +49,7 @@ int main (int argc, char * argv[]) {
   if (ierr) {
     printf("ERROR: %d\n", ierr);
   }
+  printf("ID: %d\n", id);
   if (id == 0) {
     pi = 4.0 * (double)globalCount/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", globalCount, samples, pi);
