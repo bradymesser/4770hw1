@@ -12,7 +12,7 @@ int main (int argc, char * argv[]) {
   int rank, numtasks;
   int sendCount = 1;
   int receiveCount = 1;
-  int send_tag = 69;
+  int send_tag = 0;
   double startTime = 0;
   double endTime = 0;
   MPI_Status status;
