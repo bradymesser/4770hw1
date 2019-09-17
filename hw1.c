@@ -46,10 +46,6 @@ int main (int argc, char * argv[]) {
   int globalCount = 0;
   samples = samples * numprocs;
   ierr = MPI_Reduce(&count, &globalCount, numprocs, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-  if (ierr) {
-    printf("ERROR: %d\n", ierr);
-  }
-  printf("ID: %d\n", id);
   if (id == 0) {
     pi = 4.0 * (double)globalCount/(double)samples;
     printf("Count = %d, Samples = %d, Estimate of pi = %7.5f\n", globalCount, samples, pi);
