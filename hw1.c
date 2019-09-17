@@ -25,7 +25,7 @@ int main (int argc, char * argv[]) {
   ierr = MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
 
   samples = atoi(argv[1]);
-
+  printf("1\n");
   if (id == 0) {
     samples = samples / numprocs;
     for (int i = 1; i < numprocs; i++) {
